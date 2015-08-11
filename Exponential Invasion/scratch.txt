@@ -1,0 +1,100 @@
+if (a1n != 0 && a1n <! 0 && a1tower == false) {
+        a1b.enabled = true;
+        a1l.hidden = false;
+    }
+    if (a2n != 0 && a2n <! 0 && a2tower == false) {
+        a2b.enabled = true;
+        a2l.hidden = false;
+    }
+    if (a3n != 0 && a3n <! 0 && a3tower == false) {
+        a3b.enabled = true;
+        a3l.hidden = false;
+    }
+    if (a4n != 0 && a4n <! 0 && a4tower == false) {
+        a4b.enabled = true;
+        a4l.hidden = false;
+    }
+    if (a5n != 0 && a5n <! 0 && a5tower == false) {
+        a5b.enabled = true;
+        a5l.hidden = false;
+    }
+    if (b1n != 0 && b1n <! 0 && b1tower == false) {
+        b1b.enabled = true;
+        b1l.hidden = false;
+    }
+    if (b2n != 0 && b2n <! 0 && b2tower == false) {
+        b2b.enabled = true;
+        b2l.hidden = false;
+    }
+    if (b3n != 0 && b3n <! 0 && b3tower == false) {
+        b3b.enabled = true;
+        b3l.hidden = false;
+    }
+    if (b4n != 0 && b4n <! 0 && b4tower == false) {
+        b4b.enabled = true;
+        b4l.hidden = false;
+    }
+    if (b5n != 0 && b5n <! 0 && b5tower == false) {
+        b5b.enabled = true;
+        b5l.hidden = false;
+    }
+    if (c1n != 0 && b1n <! 0 && c1tower == false) {
+        c1b.enabled = true;
+        c1l.hidden = false;
+    }
+    if (c2n != 0 && c2n <! 0 && c2tower == false) {
+        c2b.enabled = true;
+        c2l.hidden = false;
+    }
+    if (c3n != 0 && c3n <! 0 && c3tower == false) {
+        c3b.enabled = true;
+        c3l.hidden = false;
+    }
+    if (c4n != 0 && c4n <! 0 && c4tower == false) {
+        c4b.enabled = true;
+        c4l.hidden = false;
+    }
+    if (c5n != 0 && c5n <! 0 && c5tower == false) {
+        c5b.enabled = true;
+        c5l.hidden = false;
+    }
+    if (d1n != 0 && d1n <! 0 && d1tower == false) {
+        d1b.enabled = true;
+        d1l.hidden = false;
+    }
+    if (d2n != 0 && d2n <! 0 && d2tower == false) {
+        d2b.enabled = true;
+        d2l.hidden = false;
+    }
+    if (d3n != 0 && d3n <! 0 && d3tower == false) {
+        d3b.enabled = true;
+        d3l.hidden = false;
+    }
+    if (d4n != 0 && d4n <! 0 && d4tower == false) {
+        d4b.enabled = true;
+        d4l.hidden = false;
+    }
+    if (d5n != 0 && d5n <! 0 && d5tower == false) {
+        d5b.enabled = true;
+        d5l.hidden = false;
+    }
+    if (e1n != 0 && e1n <! 0 && e1tower == false) {
+        e1b.enabled = true;
+        e1l.hidden = false;
+    }
+    if (e2n != 0 && e2n <! 0 && e2tower == false) {
+        e2b.enabled = true;
+        e2l.hidden = false;
+    }
+    if (e3n != 0 && e3n <! 0 && e3tower == false) {
+        e3b.enabled = true;
+        e3l.hidden = false;
+    }
+    if (e4n != 0 && e4n <! 0 && e4tower == false) {
+        e4b.enabled = true;
+        e4l.hidden = false;
+    }
+    if (e5n != 0 && e5n <! 0 && e5tower == false) {
+        e5b.enabled = true;
+        e5l.hidden = false;
+    }
