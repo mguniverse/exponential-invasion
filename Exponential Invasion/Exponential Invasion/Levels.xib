@@ -38,6 +38,7 @@
                 <outlet property="b5i" destination="20" id="157"/>
                 <outlet property="b5l" destination="36" id="158"/>
                 <outlet property="bombIndicator" destination="jHd-nw-foi" id="5pI-a3-nru"/>
+                <outlet property="bombsLabel" destination="v0s-1s-o6y" id="3Gf-fu-Q1h"/>
                 <outlet property="c1b" destination="65" id="96"/>
                 <outlet property="c1i" destination="22" id="159"/>
                 <outlet property="c1l" destination="41" id="160"/>
@@ -846,14 +847,28 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="ZONE 1" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="nsr-kl-Lyf" customClass="FXLabel">
-                            <rect key="frame" x="9" y="8" width="72" height="28"/>
+                            <rect key="frame" x="10" y="8" width="72" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="BOMBS:" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="UeS-pB-aeV" customClass="FXLabel">
+                            <rect key="frame" x="10" y="80" width="72" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="0/0" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="v0s-1s-o6y" customClass="FXLabel">
+                            <rect key="frame" x="10" y="116" width="72" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Atn-xn-7Oq">
-                            <rect key="frame" x="19" y="262" width="50" height="50"/>
+                            <rect key="frame" x="20" y="262" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                             <state key="normal" image="menu-round.png">
@@ -869,7 +884,7 @@
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8yr-TE-US6">
-                            <rect key="frame" x="19" y="204" width="50" height="50"/>
+                            <rect key="frame" x="20" y="204" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" image="cancel.png">
@@ -886,7 +901,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ed6-pf-C6c">
-                            <rect key="frame" x="19" y="204" width="50" height="50"/>
+                            <rect key="frame" x="20" y="204" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" image="restart.png">
@@ -903,7 +918,7 @@
                             </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bomb-indicator1.png" id="jHd-nw-foi">
-                            <rect key="frame" x="28" y="44" width="32" height="8"/>
+                            <rect key="frame" x="29" y="54" width="32" height="8"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>

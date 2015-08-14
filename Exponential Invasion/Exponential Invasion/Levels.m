@@ -1843,7 +1843,7 @@
 
 -(void)loadTotalBombs {
     totalBombs = level1bombs + level2bombs + level3bombs + level4bombs + level5bombs + level6bombs + level7bombs + level8bombs + level9bombs + level10bombs + level11bombs + level12bombs + level13bombs + level14bombs + level15bombs + level16bombs + level17bombs + level18bombs + level19bombs + level20bombs + level21bombs + level22bombs + level23bombs + level24bombs + level25bombs + level26bombs + level27bombs + level28bombs + level29bombs + level30bombs + level31bombs + level32bombs + level33bombs + level34bombs + level35bombs + level36bombs;
-    bombsLabel.text = [NSString stringWithFormat:@"%i/%i BOMBS IGNITED", totalBombs, levelsCount * 3];
+    bombsLabel.text = [NSString stringWithFormat:@"%i/%i", totalBombs, levelsCount * 3];
 }
 
 -(void)loadProgress {
