@@ -64,23 +64,80 @@
 @synthesize e5l;
 
 -(IBAction) switchLeft {
-    [self snapSound];
-    
+    if (animating == false && interface >= 0 && endView.hidden == true) {
+        animating = true;
+        [self snapSound];
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:animationSpeed];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        
+        gridView.transform = CGAffineTransformMakeTranslation(160, 0);
+        gridView.alpha = 0;
+        
+        [UIView commitAnimations];
+        
+        [self performSelector:@selector(offsetSwitchLeft) withObject:self afterDelay:animationSpeed];
+    }
+}
+
+-(void)offsetSwitchLeft {
     currentLevel = currentLevel - 1;
     if (currentLevel == 0) {
         currentLevel = levelsCount;
     }
     [self level:currentLevel];
+    [self loadProgress];
+    gridView.transform = CGAffineTransformMakeTranslation(-160, 0);
+    
+    [self setLevelPosition];
 }
 
 -(IBAction) switchRight {
-    [self snapSound];
-    
+    if (animating == false && interface >= 0 && endView.hidden == true) {
+        animating = true;
+        [self snapSound];
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:animationSpeed];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        
+        gridView.transform = CGAffineTransformMakeTranslation(-160, 0);
+        gridView.alpha = 0;
+        
+        [UIView commitAnimations];
+        
+        [self performSelector:@selector(offsetSwitchRight) withObject:self afterDelay:animationSpeed];
+    }
+}
+
+-(void)offsetSwitchRight {
     currentLevel = currentLevel + 1;
     if (currentLevel == levelsCount + 1) {
         currentLevel = 1;
     }
     [self level:currentLevel];
+    [self loadProgress];
+    gridView.transform = CGAffineTransformMakeTranslation(160, 0);
+    
+    [self setLevelPosition];
+}
+
+-(void)setLevelPosition {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationSpeed];
+    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+    
+    gridView.transform = CGAffineTransformMakeTranslation(0, 0);
+    gridView.alpha = 1;
+    
+    [UIView commitAnimations];
+    
+    [self performSelector:@selector(endAnimation) withObject:self afterDelay:animationSpeed];
+}
+
+-(void)endAnimation {
+    animating = false;
 }
 
 -(void)menuInterface {
@@ -1785,7 +1842,7 @@
 
 -(void)loadTotalBombs {
     totalBombs = level1bombs + level2bombs + level3bombs + level4bombs + level5bombs + level6bombs + level7bombs + level8bombs + level9bombs + level10bombs + level11bombs + level12bombs + level13bombs + level14bombs + level15bombs + level16bombs + level17bombs + level18bombs + level19bombs + level20bombs + level21bombs + level22bombs + level23bombs + level24bombs + level25bombs + level26bombs + level27bombs + level28bombs + level29bombs + level30bombs + level31bombs + level32bombs + level33bombs + level34bombs + level35bombs + level36bombs;
-    bombsLabel.text = [NSString stringWithFormat:@"%i/%i BOMBS IGNITED", totalBombs, levelsCount * 3];
+    bombsLabel.text = [NSString stringWithFormat:@"%i/%i", totalBombs, levelsCount * 3];
 }
 
 -(void)loadProgress {
@@ -1804,7 +1861,7 @@
     steps = 0;
     nilSteps = towers;
     
-    levelLabel.text = [NSString stringWithFormat:@"Level %i", currentLevel];
+    levelLabel.text = [NSString stringWithFormat:@"ZONE %i", currentLevel];
     
     a1l.text = [NSString stringWithFormat:@"%i", a1n];
     a2l.text = [NSString stringWithFormat:@"%i", a2n];
@@ -2536,9 +2593,19 @@
 }
 
 -(IBAction)retry {
+    if (endView.hidden == false) {
+        [self snapSound];
+    }
+    else {
+        [self.view shakeX];
+        [self explodeSound];
+    }
     [self level:currentLevel];
 }
 -(IBAction)next {
+    if (endView.hidden == false) {
+        [self snapSound];
+    }
     currentLevel = currentLevel + 1;
     if (currentLevel == levelsCount + 1) {
         currentLevel = 1;
@@ -2552,7 +2619,7 @@
         TWTweetComposeViewController *tweetSheet =
         [[TWTweetComposeViewController alloc] init];
         [tweetSheet setInitialText: [NSString stringWithFormat:@"I have finished level %i while only taking %i steps in Exponential Invasion by @mguniverse!", currentLevel, steps]];
-	    [self presentModalViewController:tweetSheet animated:YES];
+        [self presentModalViewController:tweetSheet animated:YES];
     }
     else
     {
@@ -2776,33 +2843,33 @@
     
     [self disableWalls];
     
-    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
-    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
+    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
+    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad-large.png"]]];
     
-    if (interface == 1) {
+    if (interface >= 0) {
         restartButton.hidden = true;
         restartButton.enabled = false;
         cancelButton.hidden = false;
@@ -3272,31 +3339,31 @@
         e5l.hidden = false;
     }
     
-    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
+    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
     
     if (a1tower == false) {
         a1l.textColor = [UIColor whiteColor];
@@ -3380,7 +3447,7 @@
         [self winLevel];
     }
     
-    if (interface == 1) {
+    if (interface >= 0) {
         restartButton.hidden = false;
         restartButton.enabled = true;
         cancelButton.hidden = true;
@@ -3630,125 +3697,123 @@
 }
 
 -(void)loadShadows {
-    /*
-     a1l.shadowColor = nil;
-     a1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     a1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     a1l.shadowBlur = 5.0f;
-     a2l.shadowColor = nil;
-     a2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     a2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     a2l.shadowBlur = 5.0f;
-     a3l.shadowColor = nil;
-     a3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     a3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     a3l.shadowBlur = 5.0f;
-     a4l.shadowColor = nil;
-     a4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     a4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     a4l.shadowBlur = 5.0f;
-     a5l.shadowColor = nil;
-     a5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     a5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     a5l.shadowBlur = 5.0f;
-     b1l.shadowColor = nil;
-     b1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     b1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     b1l.shadowBlur = 5.0f;
-     b2l.shadowColor = nil;
-     b2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     b2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     b2l.shadowBlur = 5.0f;
-     b3l.shadowColor = nil;
-     b3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     b3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     b3l.shadowBlur = 5.0f;
-     b4l.shadowColor = nil;
-     b4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     b4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     b4l.shadowBlur = 5.0f;
-     b5l.shadowColor = nil;
-     b5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     b5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     b5l.shadowBlur = 5.0f;
-     c1l.shadowColor = nil;
-     c1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     c1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     c1l.shadowBlur = 5.0f;
-     c2l.shadowColor = nil;
-     c2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     c2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     c2l.shadowBlur = 5.0f;
-     c3l.shadowColor = nil;
-     c3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     c3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     c3l.shadowBlur = 5.0f;
-     c4l.shadowColor = nil;
-     c4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     c4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     c4l.shadowBlur = 5.0f;
-     c5l.shadowColor = nil;
-     c5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     c5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     c5l.shadowBlur = 5.0f;
-     d1l.shadowColor = nil;
-     d1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     d1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     d1l.shadowBlur = 5.0f;
-     d2l.shadowColor = nil;
-     d2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     d2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     d2l.shadowBlur = 5.0f;
-     d3l.shadowColor = nil;
-     d3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     d3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     d3l.shadowBlur = 5.0f;
-     d4l.shadowColor = nil;
-     d4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     d4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     d4l.shadowBlur = 5.0f;
-     d5l.shadowColor = nil;
-     d5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     d5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     d5l.shadowBlur = 5.0f;
-     e1l.shadowColor = nil;
-     e1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     e1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     e1l.shadowBlur = 5.0f;
-     e2l.shadowColor = nil;
-     e2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     e2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     e2l.shadowBlur = 5.0f;
-     e3l.shadowColor = nil;
-     e3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     e3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     e3l.shadowBlur = 5.0f;
-     e4l.shadowColor = nil;
-     e4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     e4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     e4l.shadowBlur = 5.0f;
-     e5l.shadowColor = nil;
-     e5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
-     e5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-     e5l.shadowBlur = 5.0f;
-     */
+    a1l.shadowColor = nil;
+    a1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    a1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    a1l.shadowBlur = 5.0f;
+    a2l.shadowColor = nil;
+    a2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    a2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    a2l.shadowBlur = 5.0f;
+    a3l.shadowColor = nil;
+    a3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    a3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    a3l.shadowBlur = 5.0f;
+    a4l.shadowColor = nil;
+    a4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    a4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    a4l.shadowBlur = 5.0f;
+    a5l.shadowColor = nil;
+    a5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    a5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    a5l.shadowBlur = 5.0f;
+    b1l.shadowColor = nil;
+    b1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    b1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    b1l.shadowBlur = 5.0f;
+    b2l.shadowColor = nil;
+    b2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    b2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    b2l.shadowBlur = 5.0f;
+    b3l.shadowColor = nil;
+    b3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    b3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    b3l.shadowBlur = 5.0f;
+    b4l.shadowColor = nil;
+    b4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    b4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    b4l.shadowBlur = 5.0f;
+    b5l.shadowColor = nil;
+    b5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    b5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    b5l.shadowBlur = 5.0f;
+    c1l.shadowColor = nil;
+    c1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    c1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    c1l.shadowBlur = 5.0f;
+    c2l.shadowColor = nil;
+    c2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    c2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    c2l.shadowBlur = 5.0f;
+    c3l.shadowColor = nil;
+    c3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    c3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    c3l.shadowBlur = 5.0f;
+    c4l.shadowColor = nil;
+    c4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    c4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    c4l.shadowBlur = 5.0f;
+    c5l.shadowColor = nil;
+    c5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    c5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    c5l.shadowBlur = 5.0f;
+    d1l.shadowColor = nil;
+    d1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    d1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    d1l.shadowBlur = 5.0f;
+    d2l.shadowColor = nil;
+    d2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    d2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    d2l.shadowBlur = 5.0f;
+    d3l.shadowColor = nil;
+    d3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    d3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    d3l.shadowBlur = 5.0f;
+    d4l.shadowColor = nil;
+    d4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    d4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    d4l.shadowBlur = 5.0f;
+    d5l.shadowColor = nil;
+    d5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    d5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    d5l.shadowBlur = 5.0f;
+    e1l.shadowColor = nil;
+    e1l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    e1l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    e1l.shadowBlur = 5.0f;
+    e2l.shadowColor = nil;
+    e2l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    e2l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    e2l.shadowBlur = 5.0f;
+    e3l.shadowColor = nil;
+    e3l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    e3l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    e3l.shadowBlur = 5.0f;
+    e4l.shadowColor = nil;
+    e4l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    e4l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    e4l.shadowBlur = 5.0f;
+    e5l.shadowColor = nil;
+    e5l.shadowOffset = CGSizeMake(0.0f, 2.0f);
+    e5l.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    e5l.shadowBlur = 5.0f;
 }
 
 -(IBAction) a1a {
     [self prepareForSelection];
     a1if = true;
-    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a2n < a1n && a2wall == false) {
         a2b.enabled = true;
-        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b1n < a1n && b1wall == false) {
         b1b.enabled = true;
-        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < a1n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (a2if == true) {
@@ -3762,8 +3827,8 @@
             a1l.text = [NSString stringWithFormat:@"%i", a1n];
             a1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3779,8 +3844,8 @@
             a1l.text = [NSString stringWithFormat:@"%i", a1n];
             a1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3796,8 +3861,8 @@
             a1l.text = [NSString stringWithFormat:@"%i", a1n];
             a1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3806,26 +3871,26 @@
 -(IBAction) a2a {
     [self prepareForSelection];
     a2if = true;
-    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a1n < a2n && a1wall == false) {
         a1b.enabled = true;
-        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a3n < a2n && a3wall == false) {
         a3b.enabled = true;
-        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b1n < a2n && b1wall == false) {
         b1b.enabled = true;
-        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < a2n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < a2n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (a1if == true) {
@@ -3839,8 +3904,8 @@
             a2l.text = [NSString stringWithFormat:@"%i", a2n];
             a2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3855,8 +3920,8 @@
             a2l.text = [NSString stringWithFormat:@"%i", a2n];
             a2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3871,8 +3936,8 @@
             a2l.text = [NSString stringWithFormat:@"%i", a2n];
             a2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3887,8 +3952,8 @@
             a2l.text = [NSString stringWithFormat:@"%i", a2n];
             a2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3903,8 +3968,8 @@
             a2l.text = [NSString stringWithFormat:@"%i", a2n];
             a2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3912,26 +3977,26 @@
 -(IBAction) a3a {
     [self prepareForSelection];
     a3if = true;
-    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a2n < a3n && a2wall == false) {
         a2b.enabled = true;
-        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a4n < a3n && a4wall == false) {
         a4b.enabled = true;
-        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < a3n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < a3n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < a3n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (a2if == true) {
@@ -3945,8 +4010,8 @@
             a3l.text = [NSString stringWithFormat:@"%i", a3n];
             a3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3962,8 +4027,8 @@
             a3l.text = [NSString stringWithFormat:@"%i", a3n];
             a3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3978,8 +4043,8 @@
             a3l.text = [NSString stringWithFormat:@"%i", a3n];
             a3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -3994,8 +4059,8 @@
             a3l.text = [NSString stringWithFormat:@"%i", a3n];
             a3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4010,8 +4075,8 @@
             a3l.text = [NSString stringWithFormat:@"%i", a3n];
             a3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4019,26 +4084,26 @@
 -(IBAction) a4a {
     [self prepareForSelection];
     a4if = true;
-    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a3n < a4n && a3wall == false) {
         a3b.enabled = true;
-        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a5n < a4n && a5wall == false) {
         a5b.enabled = true;
-        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < a4n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < a4n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b5n < a4n && b5wall == false) {
         b5b.enabled = true;
-        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (b3if == true) {
@@ -4052,8 +4117,8 @@
             a4l.text = [NSString stringWithFormat:@"%i", a4n];
             a4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4068,8 +4133,8 @@
             a4l.text = [NSString stringWithFormat:@"%i", a4n];
             a4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4084,8 +4149,8 @@
             a4l.text = [NSString stringWithFormat:@"%i", a4n];
             a4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4100,8 +4165,8 @@
             a4l.text = [NSString stringWithFormat:@"%i", a4n];
             a4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4116,8 +4181,8 @@
             a4l.text = [NSString stringWithFormat:@"%i", a4n];
             a4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4125,18 +4190,18 @@
 -(IBAction) a5a {
     [self prepareForSelection];
     a5if = true;
-    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a4n < a5n && a4wall == false) {
         a4b.enabled = true;
-        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < a5n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b5n <a5n && b5wall == false) {
         b5b.enabled = true;
-        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a4if == true) {
         a5n = a5n + a4n;
@@ -4149,8 +4214,8 @@
             a5l.text = [NSString stringWithFormat:@"%i", a5n];
             a5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4165,8 +4230,8 @@
             a5l.text = [NSString stringWithFormat:@"%i", a5n];
             a5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4181,8 +4246,8 @@
             a5l.text = [NSString stringWithFormat:@"%i", a5n];
             a5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4190,26 +4255,26 @@
 -(IBAction) b1a {
     [self prepareForSelection];
     b1if = true;
-    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a1n < b1n && a1wall == false) {
         a1b.enabled = true;
-        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a2n < b1n && a2wall == false) {
         a2b.enabled = true;
-        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < b1n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c1n < b1n && c1wall == false) {
         c1b.enabled = true;
-        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < b1n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (a1if == true) {
@@ -4223,8 +4288,8 @@
             b1l.text = [NSString stringWithFormat:@"%i", b1n];
             b1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4239,8 +4304,8 @@
             b1l.text = [NSString stringWithFormat:@"%i", b1n];
             b1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4255,8 +4320,8 @@
             b1l.text = [NSString stringWithFormat:@"%i", b1n];
             b1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4271,8 +4336,8 @@
             b1l.text = [NSString stringWithFormat:@"%i", b1n];
             b1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4287,8 +4352,8 @@
             b1l.text = [NSString stringWithFormat:@"%i", b1n];
             b1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4297,38 +4362,38 @@
 -(IBAction) b2a {
     [self prepareForSelection];
     b2if = true;
-    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a1n < b2n && a1wall == false) {
         a1b.enabled = true;
-        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a2n < b2n && a2wall == false) {
         a2b.enabled = true;
-        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a3n < b2n && a3wall == false) {
         a3b.enabled = true;
-        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b1n < b2n && b1wall == false) {
         b1b.enabled = true;
-        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < b2n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c1n < b2n && c1wall == false) {
         c1b.enabled = true;
-        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < b2n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < b2n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (a1if == true) {
@@ -4342,8 +4407,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4358,8 +4423,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4374,8 +4439,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4390,8 +4455,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4406,8 +4471,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4422,8 +4487,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4438,8 +4503,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4454,8 +4519,8 @@
             b2l.text = [NSString stringWithFormat:@"%i", b2n];
             b2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4463,38 +4528,38 @@
 -(IBAction) b3a {
     [self prepareForSelection];
     b3if = true;
-    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a2n < b3n && a2wall == false) {
         a2b.enabled = true;
-        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a3n < b3n && a3wall == false) {
         a3b.enabled = true;
-        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a4n < b3n && a4wall == false) {
         a4b.enabled = true;
-        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < b3n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < b3n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < b3n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < b3n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < b3n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a2if == true) {
         b3n = b3n + a2n;
@@ -4507,8 +4572,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4523,8 +4588,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4539,8 +4604,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4555,8 +4620,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4571,8 +4636,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4587,8 +4652,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4603,8 +4668,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4619,8 +4684,8 @@
             b3l.text = [NSString stringWithFormat:@"%i", b3n];
             b3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4628,38 +4693,38 @@
 -(IBAction) b4a {
     [self prepareForSelection];
     b4if = true;
-    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a3n < b4n && a3wall == false) {
         a3b.enabled = true;
-        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a4n < b4n && a4wall == false) {
         a4b.enabled = true;
-        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a5n < b4n && a5wall == false) {
         a5b.enabled = true;
-        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < b4n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b5n < b4n && b5wall == false) {
         b5b.enabled = true;
-        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < b4n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < b4n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c5n < b4n && c5wall == false) {
         c5b.enabled = true;
-        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (b3if == true) {
@@ -4673,8 +4738,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4689,8 +4754,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4705,8 +4770,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4721,8 +4786,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4737,8 +4802,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4753,8 +4818,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4769,8 +4834,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4785,8 +4850,8 @@
             b4l.text = [NSString stringWithFormat:@"%i", b4n];
             b4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4794,26 +4859,26 @@
 -(IBAction) b5a {
     [self prepareForSelection];
     b5if = true;
-    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (a4n < b5n && a4wall == false) {
         a4b.enabled = true;
-        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a5n < b5n && a5wall == false) {
         a5b.enabled = true;
-        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < b5n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < b5n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c5n < b5n && c5wall == false) {
         c5b.enabled = true;
-        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (a4if == true) {
         b5n = b5n + a4n;
@@ -4826,8 +4891,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4842,8 +4907,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4858,8 +4923,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4874,8 +4939,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4890,8 +4955,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4906,8 +4971,8 @@
             b5l.text = [NSString stringWithFormat:@"%i", b5n];
             b5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4915,26 +4980,26 @@
 -(IBAction) c1a {
     [self prepareForSelection];
     c1if = true;
-    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (b1n < c1n && b1wall == false) {
         b1b.enabled = true;
-        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < c1n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < c1n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d1n < c1n && d1wall == false) {
         d1b.enabled = true;
-        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < c1n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b1if == true) {
         c1n = c1n + b1n;
@@ -4947,8 +5012,8 @@
             c1l.text = [NSString stringWithFormat:@"%i", c1n];
             c1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4963,8 +5028,8 @@
             c1l.text = [NSString stringWithFormat:@"%i", c1n];
             c1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4979,8 +5044,8 @@
             c1l.text = [NSString stringWithFormat:@"%i", c1n];
             c1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -4995,8 +5060,8 @@
             c1l.text = [NSString stringWithFormat:@"%i", c1n];
             c1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5011,8 +5076,8 @@
             c1l.text = [NSString stringWithFormat:@"%i", c1n];
             c1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5020,38 +5085,38 @@
 -(IBAction) c2a {
     [self prepareForSelection];
     c2if = true;
-    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (b1n < c2n && b1wall == false) {
         b1b.enabled = true;
-        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b2n < c2n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < c2n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c1n < c2n && c1wall == false) {
         c1b.enabled = true;
-        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < c2n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d1n < c2n && d1wall == false) {
         d1b.enabled = true;
-        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < c2n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < c2n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b1if == true) {
         c2n = c2n + b1n;
@@ -5064,8 +5129,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5080,8 +5145,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5096,8 +5161,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5112,8 +5177,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5128,8 +5193,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5144,8 +5209,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5160,8 +5225,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5176,8 +5241,8 @@
             c2l.text = [NSString stringWithFormat:@"%i", c2n];
             c2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5185,38 +5250,38 @@
 -(IBAction) c3a {
     [self prepareForSelection];
     c3if = true;
-    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (b2n < c3n && b2wall == false) {
         b2b.enabled = true;
-        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b3n < c3n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < c3n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < c3n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < c3n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < c3n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < c3n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < c3n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (b2if == true) {
@@ -5230,8 +5295,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5246,8 +5311,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5262,8 +5327,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5278,8 +5343,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5294,8 +5359,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5310,8 +5375,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5326,8 +5391,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5342,8 +5407,8 @@
             c3l.text = [NSString stringWithFormat:@"%i", c3n];
             c3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5351,38 +5416,38 @@
 -(IBAction) c4a {
     [self prepareForSelection];
     c4if = true;
-    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (b3n < c4n && b3wall == false) {
         b3b.enabled = true;
-        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4n < c4n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b5n < c4n && b5wall == false) {
         b5b.enabled = true;
-        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < c4n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c5n < c4n && c5wall == false) {
         c5b.enabled = true;
-        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < c4n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < c4n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d5n < c4n && d5wall == false) {
         d5b.enabled = true;
-        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (b3if == true) {
@@ -5397,8 +5462,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5414,8 +5479,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5431,8 +5496,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5448,8 +5513,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5465,8 +5530,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5482,8 +5547,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5499,8 +5564,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5516,8 +5581,8 @@
             c4l.text = [NSString stringWithFormat:@"%i", c4n];
             c4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5526,26 +5591,26 @@
 -(IBAction) c5a {
     [self prepareForSelection];
     c5if = true;
-    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (b4n < c5n && b4wall == false) {
         b4b.enabled = true;
-        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b5n < c5n && b5wall == false) {
         b5b.enabled = true;
-        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < c5n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < c5n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d5n < c5n && d5wall == false) {
         d5b.enabled = true;
-        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (b4if == true) {
         c5n = c5n + b4n;
@@ -5558,8 +5623,8 @@
             c5l.text = [NSString stringWithFormat:@"%i", c5n];
             c5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5574,8 +5639,8 @@
             c5l.text = [NSString stringWithFormat:@"%i", c5n];
             c5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5590,8 +5655,8 @@
             c5l.text = [NSString stringWithFormat:@"%i", c5n];
             c5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5606,8 +5671,8 @@
             c5l.text = [NSString stringWithFormat:@"%i", c5n];
             c5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5622,8 +5687,8 @@
             c5l.text = [NSString stringWithFormat:@"%i", c5n];
             c5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5631,26 +5696,26 @@
 -(IBAction) d1a {
     [self prepareForSelection];
     d1if = true;
-    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (c1n < d1n && c1wall == false) {
         c1b.enabled = true;
-        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < d1n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < d1n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e1n < d1n && e1wall == false) {
         e1b.enabled = true;
-        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e2n < d1n && e2wall == false) {
         e2b.enabled = true;
-        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (c2if == true) {
@@ -5664,8 +5729,8 @@
             d1l.text = [NSString stringWithFormat:@"%i", d1n];
             d1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5680,8 +5745,8 @@
             d1l.text = [NSString stringWithFormat:@"%i", d1n];
             d1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5696,8 +5761,8 @@
             d1l.text = [NSString stringWithFormat:@"%i", d1n];
             d1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5712,8 +5777,8 @@
             d1l.text = [NSString stringWithFormat:@"%i", d1n];
             d1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5728,8 +5793,8 @@
             d1l.text = [NSString stringWithFormat:@"%i", d1n];
             d1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5737,38 +5802,38 @@
 -(IBAction) d2a {
     [self prepareForSelection];
     d2if = true;
-    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (c1n < d2n && c1wall == false) {
         c1b.enabled = true;
-        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c2n < d2n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < d2n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d1n < d2n && d1wall == false) {
         d1b.enabled = true;
-        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < d2n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e1n < d2n && e1wall == false) {
         e1b.enabled = true;
-        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e2n < d2n && e2wall == false) {
         e2b.enabled = true;
-        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e3n < d2n && e3wall == false) {
         e3b.enabled = true;
-        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (c3if == true) {
@@ -5782,8 +5847,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5798,8 +5863,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5814,8 +5879,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5830,8 +5895,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5846,8 +5911,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5862,8 +5927,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5878,8 +5943,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5894,8 +5959,8 @@
             d2l.text = [NSString stringWithFormat:@"%i", d2n];
             d2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5903,38 +5968,38 @@
 -(IBAction) d3a {
     [self prepareForSelection];
     d3if = true;
-    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (c2n < d3n && c2wall == false) {
         c2b.enabled = true;
-        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c3n < d3n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < d3n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < d3n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < d3n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e2n < d3n && e2wall == false) {
         e2b.enabled = true;
-        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e3n < d3n && e3wall == false) {
         e3b.enabled = true;
-        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e4n < d3n && e4wall == false) {
         e4b.enabled = true;
-        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (c3if == true) {
@@ -5948,8 +6013,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5964,8 +6029,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5980,8 +6045,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -5996,8 +6061,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6012,8 +6077,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6028,8 +6093,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6044,8 +6109,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6060,8 +6125,8 @@
             d3l.text = [NSString stringWithFormat:@"%i", d3n];
             d3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6069,38 +6134,38 @@
 -(IBAction) d4a {
     [self prepareForSelection];
     d4if = true;
-    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (c3n < d4n && c3wall == false) {
         c3b.enabled = true;
-        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4n < d4n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c5n < d4n && c5wall == false) {
         c5b.enabled = true;
-        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < d4n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d5n < d4n && d5wall == false) {
         d5b.enabled = true;
-        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e3n < d4n && e3wall == false) {
         e3b.enabled = true;
-        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e4n < d4n && e4wall == false) {
         e4b.enabled = true;
-        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e5n < d4n && e5wall == false) {
         e5b.enabled = true;
-        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     
     if (c3if == true) {
@@ -6114,8 +6179,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6130,8 +6195,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6146,8 +6211,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6162,8 +6227,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6178,8 +6243,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6194,8 +6259,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6210,8 +6275,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6226,8 +6291,8 @@
             d4l.text = [NSString stringWithFormat:@"%i", d4n];
             d4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6235,26 +6300,26 @@
 -(IBAction) d5a {
     [self prepareForSelection];
     d5if = true;
-    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (c4n < d5n && c4wall == false) {
         c4b.enabled = true;
-        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c5n < d5n && c5wall == false) {
         c5b.enabled = true;
-        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n <d5n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e4n < d5n && e4wall == false) {
         e4b.enabled = true;
-        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e5n < d5n && e5wall == false) {
         e5b.enabled = true;
-        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (c4if == true) {
         d5n = d5n + c4n;
@@ -6267,8 +6332,8 @@
             d5l.text = [NSString stringWithFormat:@"%i", d5n];
             d5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6283,8 +6348,8 @@
             d5l.text = [NSString stringWithFormat:@"%i", d5n];
             d5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6299,8 +6364,8 @@
             d5l.text = [NSString stringWithFormat:@"%i", d5n];
             d5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6315,8 +6380,8 @@
             d5l.text = [NSString stringWithFormat:@"%i", d5n];
             d5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6331,8 +6396,8 @@
             d5l.text = [NSString stringWithFormat:@"%i", d5n];
             d5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6340,18 +6405,18 @@
 -(IBAction) e1a {
     [self prepareForSelection];
     e1if = true;
-    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (d1n < e1n && d1wall == false) {
         d1b.enabled = true;
-        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < e1n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e2n < e1n && e2wall == false) {
         e2b.enabled = true;
-        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2if == true) {
         e1n = e1n + d2n;
@@ -6364,8 +6429,8 @@
             e1l.text = [NSString stringWithFormat:@"%i", e1n];
             e1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6380,8 +6445,8 @@
             e1l.text = [NSString stringWithFormat:@"%i", e1n];
             e1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6396,8 +6461,8 @@
             e1l.text = [NSString stringWithFormat:@"%i", e1n];
             e1tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6405,26 +6470,26 @@
 -(IBAction) e2a {
     [self prepareForSelection];
     e2if = true;
-    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (d1n < e2n && d1wall == false) {
         d1b.enabled = true;
-        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e1n < e2n && e1wall == false) {
         e1b.enabled = true;
-        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d2n < e2n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < e2n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e3n < e2n && e3wall == false) {
         e3b.enabled = true;
-        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3if == true) {
         e2n = e2n + d3n;
@@ -6437,8 +6502,8 @@
             e2l.text = [NSString stringWithFormat:@"%i", e2n];
             e2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6453,8 +6518,8 @@
             e2l.text = [NSString stringWithFormat:@"%i", e2n];
             e2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6469,8 +6534,8 @@
             e2l.text = [NSString stringWithFormat:@"%i", e2n];
             e2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6485,8 +6550,8 @@
             e2l.text = [NSString stringWithFormat:@"%i", e2n];
             e2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6501,8 +6566,8 @@
             e2l.text = [NSString stringWithFormat:@"%i", e2n];
             e2tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6510,26 +6575,26 @@
 -(IBAction) e3a {
     [self prepareForSelection];
     e3if = true;
-    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (d2n < e3n && d2wall == false) {
         d2b.enabled = true;
-        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e2n < e3n && e2wall == false) {
         e2b.enabled = true;
-        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d3n < e3n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < e3n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e4n < e3n && e4wall == false) {
         e4b.enabled = true;
-        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4if == true) {
         e3n = e3n + d4n;
@@ -6542,8 +6607,8 @@
             e3l.text = [NSString stringWithFormat:@"%i", e3n];
             e3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6558,8 +6623,8 @@
             e3l.text = [NSString stringWithFormat:@"%i", e3n];
             e3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6574,8 +6639,8 @@
             e3l.text = [NSString stringWithFormat:@"%i", e3n];
             e3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6590,8 +6655,8 @@
             e3l.text = [NSString stringWithFormat:@"%i", e3n];
             e3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6606,8 +6671,8 @@
             e3l.text = [NSString stringWithFormat:@"%i", e3n];
             e3tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6615,26 +6680,26 @@
 -(IBAction) e4a {
     [self prepareForSelection];
     e4if = true;
-    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (d3n < e4n && d3wall == false) {
         d3b.enabled = true;
-        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e3n < e4n && e3wall == false) {
         e3b.enabled = true;
-        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4n < e4n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d5n < e4n && d5wall == false) {
         d5b.enabled = true;
-        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e5n < e4n && e5wall == false) {
         e5b.enabled = true;
-        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4if == true) {
         e4n = e4n + d4n;
@@ -6647,8 +6712,8 @@
             e4l.text = [NSString stringWithFormat:@"%i", e4n];
             e4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6663,8 +6728,8 @@
             e4l.text = [NSString stringWithFormat:@"%i", e4n];
             e4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6679,8 +6744,8 @@
             e4l.text = [NSString stringWithFormat:@"%i", e4n];
             e4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6695,8 +6760,8 @@
             e4l.text = [NSString stringWithFormat:@"%i", e4n];
             e4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6711,8 +6776,8 @@
             e4l.text = [NSString stringWithFormat:@"%i", e4n];
             e4tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6720,18 +6785,18 @@
 -(IBAction) e5a {
     [self prepareForSelection];
     e5if = true;
-    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected.png"]]];
+    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-selected-large.png"]]];
     if (d4n < e5n && d4wall == false) {
         d4b.enabled = true;
-        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d5n < e5n && d5wall == false) {
         d5b.enabled = true;
-        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (e4n < e5n && e4wall == false) {
         e4b.enabled = true;
-        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered.png"]]];
+        [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-good-bordered-large.png"]]];
     }
     if (d4if == true) {
         e5n = e5n + d4n;
@@ -6744,8 +6809,8 @@
             e5l.text = [NSString stringWithFormat:@"%i", e5n];
             e5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6760,8 +6825,8 @@
             e5l.text = [NSString stringWithFormat:@"%i", e5n];
             e5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -6776,8 +6841,8 @@
             e5l.text = [NSString stringWithFormat:@"%i", e5n];
             e5tower = false;
             towers = towers - 1;
-			[self.view shakeX];
-			[self explodeSound];
+            [self.view shakeX];
+            [self explodeSound];
             [self freshGrid];
         }
     }
@@ -7222,31 +7287,31 @@
         e5l.hidden = false;
     }
     
-    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
-    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank.png"]]];
+    [a1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [a5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [b5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [c5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [d5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e1i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e2i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e3i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
+    [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-blank-large.png"]]];
     
     if (a1tower == false) {
         a1l.textColor = [UIColor whiteColor];
@@ -7412,6 +7477,9 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     levelsCount = 36;
+    buttonRadius = 4;
+    animationSpeed = 0.2;
+    animating = false;
     
     progress = [[NSUserDefaults standardUserDefaults] floatForKey:@"savedProgress"];
     level1bombs = [[NSUserDefaults standardUserDefaults] floatForKey:@"savedBombs1"];
@@ -7452,7 +7520,7 @@
     level36bombs = [[NSUserDefaults standardUserDefaults] floatForKey:@"savedBombs36"];
     [self loadProgress];
     [self loadTotalBombs];
-    [self loadShadows];
+    //[self loadShadows];
     
     [self menuInterface];
     
@@ -7541,12 +7609,56 @@
     currentLevel = 1;
     [self level:currentLevel];
     
+    selectView.clipsToBounds = NO;
+    selectView.layer.cornerRadius = buttonRadius;
+    selectView.layer.shadowRadius = buttonRadius;
+    selectView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    selectView.layer.shadowOffset = CGSizeMake(0,0);
+    selectView.layer.shadowOpacity = 0.2;
+    selectView.layer.masksToBounds = NO;
+    selectView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    selectView.layer.shouldRasterize = YES;
+    
     [super viewDidLoad];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    
+    self.a1l = nil;
+    self.a2l = nil;
+    self.a3l = nil;
+    self.a4l = nil;
+    self.a5l = nil;
+    self.b1l = nil;
+    self.b2l = nil;
+    self.b3l = nil;
+    self.b4l = nil;
+    self.b5l = nil;
+    self.c1l = nil;
+    self.c2l = nil;
+    self.c3l = nil;
+    self.c4l = nil;
+    self.c5l = nil;
+    self.d1l = nil;
+    self.d2l = nil;
+    self.d3l = nil;
+    self.d4l = nil;
+    self.d5l = nil;
+    self.e1l = nil;
+    self.e2l = nil;
+    self.e3l = nil;
+    self.e4l = nil;
+    self.e5l = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
     // Return YES for supported orientations
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 
 @end

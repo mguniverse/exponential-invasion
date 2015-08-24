@@ -65,7 +65,7 @@
 @synthesize e5l;
 
 -(IBAction) switchLeft {
-    if (animating == false && interface == 0) {
+    if (animating == false && interface >= 0 && endView.hidden == true) {
         animating = true;
         [self snapSound];
         
@@ -95,7 +95,7 @@
 }
 
 -(IBAction) switchRight {
-    if (animating == false && interface == 0) {
+    if (animating == false && interface >= 0 && endView.hidden == true) {
         animating = true;
         [self snapSound];
         
@@ -2594,9 +2594,19 @@
 }
 
 -(IBAction)retry {
+    if (endView.hidden == false) {
+        [self snapSound];
+    }
+    else {
+        [self.view shakeX];
+        [self explodeSound];
+    }
     [self level:currentLevel];
 }
 -(IBAction)next {
+    if (endView.hidden == false) {
+        [self snapSound];
+    }
     currentLevel = currentLevel + 1;
     if (currentLevel == levelsCount + 1) {
         currentLevel = 1;
@@ -2860,7 +2870,7 @@
     [e4i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
     [e5i setImage:[UIImage imageNamed:[NSString stringWithFormat:@"box-bad.png"]]];
     
-    if (interface == 1) {
+    if (interface >= 0) {
         restartButton.hidden = true;
         restartButton.enabled = false;
         cancelButton.hidden = false;
@@ -3438,7 +3448,7 @@
         [self winLevel];
     }
     
-    if (interface == 1) {
+    if (interface >= 0) {
         restartButton.hidden = false;
         restartButton.enabled = true;
         cancelButton.hidden = true;

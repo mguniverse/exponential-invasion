@@ -170,10 +170,16 @@
     int currentLevel;
     int currentBombs;
     int explodeChannel;
+    int buttonRadius;
+    
+    float animationSpeed;
+    BOOL animating;
     
     IBOutlet UIScrollView *myScrollView;
     IBOutlet UIView *endView;
     IBOutlet UIView *deathView;
+    IBOutlet UIView *selectView;
+    IBOutlet UIView *gridView;
     
     IBOutlet UISwipeGestureRecognizer *swipeUp;
     
@@ -234,7 +240,7 @@
     IBOutlet UIButton *rightButton;
     IBOutlet UIButton *levelSelectButton;
     IBOutlet UIButton *nextLevelButton;
-
+    
     IBOutlet UILabel *categoryLabel;
     IBOutlet UILabel *levelLabel;
     IBOutlet UILabel *bombsLabel;

@@ -1024,6 +1024,7 @@
                 <outletCollection property="gestureRecognizers" destination="8nf-O0-vUL" appends="YES" id="JMh-Xh-pEJ"/>
                 <outletCollection property="gestureRecognizers" destination="uaV-cj-3Dp" appends="YES" id="cfp-ug-Cpe"/>
             </connections>
+            <point key="canvasLocation" x="238" y="532"/>
         </view>
         <swipeGestureRecognizer direction="left" id="8nf-O0-vUL">
             <connections>
