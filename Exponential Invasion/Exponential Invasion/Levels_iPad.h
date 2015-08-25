@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "iPadView.h"
 #import "jsJiggle.h"
-#import "FXLabel.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Twitter/Twitter.h>
 
@@ -350,30 +349,30 @@
 @property(nonatomic, retain) IBOutlet UIImageView *e4i;
 @property(nonatomic, retain) IBOutlet UIImageView *e5i;
 
-@property (nonatomic, retain) IBOutlet FXLabel *a1l;
-@property (nonatomic, retain) IBOutlet FXLabel *a2l;
-@property (nonatomic, retain) IBOutlet FXLabel *a3l;
-@property (nonatomic, retain) IBOutlet FXLabel *a4l;
-@property (nonatomic, retain) IBOutlet FXLabel *a5l;
-@property (nonatomic, retain) IBOutlet FXLabel *b1l;
-@property (nonatomic, retain) IBOutlet FXLabel *b2l;
-@property (nonatomic, retain) IBOutlet FXLabel *b3l;
-@property (nonatomic, retain) IBOutlet FXLabel *b4l;
-@property (nonatomic, retain) IBOutlet FXLabel *b5l;
-@property (nonatomic, retain) IBOutlet FXLabel *c1l;
-@property (nonatomic, retain) IBOutlet FXLabel *c2l;
-@property (nonatomic, retain) IBOutlet FXLabel *c3l;
-@property (nonatomic, retain) IBOutlet FXLabel *c4l;
-@property (nonatomic, retain) IBOutlet FXLabel *c5l;
-@property (nonatomic, retain) IBOutlet FXLabel *d1l;
-@property (nonatomic, retain) IBOutlet FXLabel *d2l;
-@property (nonatomic, retain) IBOutlet FXLabel *d3l;
-@property (nonatomic, retain) IBOutlet FXLabel *d4l;
-@property (nonatomic, retain) IBOutlet FXLabel *d5l;
-@property (nonatomic, retain) IBOutlet FXLabel *e1l;
-@property (nonatomic, retain) IBOutlet FXLabel *e2l;
-@property (nonatomic, retain) IBOutlet FXLabel *e3l;
-@property (nonatomic, retain) IBOutlet FXLabel *e4l;
-@property (nonatomic, retain) IBOutlet FXLabel *e5l;
+@property (nonatomic, retain) IBOutlet UILabel *a1l;
+@property (nonatomic, retain) IBOutlet UILabel *a2l;
+@property (nonatomic, retain) IBOutlet UILabel *a3l;
+@property (nonatomic, retain) IBOutlet UILabel *a4l;
+@property (nonatomic, retain) IBOutlet UILabel *a5l;
+@property (nonatomic, retain) IBOutlet UILabel *b1l;
+@property (nonatomic, retain) IBOutlet UILabel *b2l;
+@property (nonatomic, retain) IBOutlet UILabel *b3l;
+@property (nonatomic, retain) IBOutlet UILabel *b4l;
+@property (nonatomic, retain) IBOutlet UILabel *b5l;
+@property (nonatomic, retain) IBOutlet UILabel *c1l;
+@property (nonatomic, retain) IBOutlet UILabel *c2l;
+@property (nonatomic, retain) IBOutlet UILabel *c3l;
+@property (nonatomic, retain) IBOutlet UILabel *c4l;
+@property (nonatomic, retain) IBOutlet UILabel *c5l;
+@property (nonatomic, retain) IBOutlet UILabel *d1l;
+@property (nonatomic, retain) IBOutlet UILabel *d2l;
+@property (nonatomic, retain) IBOutlet UILabel *d3l;
+@property (nonatomic, retain) IBOutlet UILabel *d4l;
+@property (nonatomic, retain) IBOutlet UILabel *d5l;
+@property (nonatomic, retain) IBOutlet UILabel *e1l;
+@property (nonatomic, retain) IBOutlet UILabel *e2l;
+@property (nonatomic, retain) IBOutlet UILabel *e3l;
+@property (nonatomic, retain) IBOutlet UILabel *e4l;
+@property (nonatomic, retain) IBOutlet UILabel *e5l;
 
 @end

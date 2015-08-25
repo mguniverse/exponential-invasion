@@ -8,8 +8,6 @@
 	<string>Invasion</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>iTunesArtwork.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.mguniverse.Exponential-Invasion</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -19,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.2</string>
+	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.2</string>
+	<string>1.3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -35,8 +33,6 @@
 		<string>Bemio.otf</string>
 		<string>Bemio Italic.otf</string>
 	</array>
-	<key>UILaunchImageFile~ipad</key>
-	<string>Default-portrait~ipad.png</string>
 	<key>UILaunchImageFile~iphone</key>
 	<string>Default.png</string>
 	<key>UIPrerenderedIcon</key>
