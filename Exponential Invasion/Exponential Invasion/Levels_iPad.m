@@ -2614,16 +2614,20 @@
 }
 
 -(IBAction)tweet {
-    if ([TWTweetComposeViewController canSendTweet])
-    {
-        TWTweetComposeViewController *tweetSheet =
-        [[TWTweetComposeViewController alloc] init];
+    [self snapSound];
+    
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        
+        SLComposeViewController *tweetSheet =[SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         [tweetSheet setInitialText: [NSString stringWithFormat:@"I have finished level %i while only taking %i steps in Exponential Invasion by @mguniverse!", currentLevel, steps]];
-        [self presentModalViewController:tweetSheet animated:YES];
+        
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+        
     }
-    else
-    {
-        evaluationLabel.text = [NSString stringWithFormat:@"The tweet could not be tweeted, connect to your Twitter account via the Settings app and try again."];
+    else {
+        //This alreat tells the user that they can't use built in socal interegration and why they can't.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"The tweet could not be tweeted, connect to your Twitter account via the Settings app and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
     }
 }
 
@@ -7295,7 +7299,7 @@
 
 -(IBAction)mainMenu {
     [self snapSound];
-    [self dismissModalViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(IBAction)levelSelect {

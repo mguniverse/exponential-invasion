@@ -27,7 +27,7 @@
 
 -(IBAction)mainMenu {
     [self snapSound];
-    [self dismissModalViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(IBAction)shakeAnimation {

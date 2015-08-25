@@ -52,7 +52,7 @@
     Levels_iPad *mvc =[[Levels_iPad alloc] initWithNibName:@"Levels_iPad" bundle:nil];
     mvc.modalPresentationStyle = UIModalPresentationFullScreen;
     mvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentModalViewController:mvc animated:NO];
+    [self presentViewController:mvc animated:NO completion:nil];
 }
 
 -(IBAction)goAbout {
@@ -60,7 +60,7 @@
     About_iPad *mvc =[[About_iPad alloc] initWithNibName:@"About_iPad" bundle:nil];
     mvc.modalPresentationStyle = UIModalPresentationFullScreen;
     mvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentModalViewController:mvc animated:NO];
+    [self presentViewController:mvc animated:NO completion:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -84,12 +84,8 @@
 
 - (void)viewDidLoad
 {
-    AudioSessionInitialize ( NULL, NULL, 
-                            NULL, // may want interruption callback here
-                            NULL );
-    UInt32 sessionCategory = kAudioSessionCategory_AmbientSound;    // 1
-    AudioSessionSetProperty (kAudioSessionProperty_AudioCategory, sizeof (sessionCategory), &sessionCategory);
-    AudioSessionSetActive (true);
+    //this line of code allows you to listen to music on iOS in the background
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Half Past" ofType:@"mp3"];
     if(backMusic)[backMusic release];        
