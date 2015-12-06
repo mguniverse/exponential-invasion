@@ -186,6 +186,9 @@
 		D482595B1BD3610100EF9DF5 /* Exponential_InvasionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D482595A1BD3610100EF9DF5 /* Exponential_InvasionTests.m */; };
 		D48259661BD3610100EF9DF5 /* Exponential_InvasionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48259651BD3610100EF9DF5 /* Exponential_InvasionUITests.m */; };
 		D4F1BF641C14EF400024502B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4F1BF631C14EF400024502B /* Main_iPad.storyboard */; };
+		D4F1BF661C14FAD10024502B /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F1BF651C14FAD10024502B /* Icon@3x.png */; };
+		D4F1BF681C14FB290024502B /* Icon-Small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F1BF671C14FB290024502B /* Icon-Small@3x.png */; };
+		D4F1BF6A1C14FB970024502B /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F1BF691C14FB970024502B /* Icon-40.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,6 +401,9 @@
 		D48259651BD3610100EF9DF5 /* Exponential_InvasionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Exponential_InvasionUITests.m; sourceTree = "<group>"; };
 		D48259671BD3610100EF9DF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4F1BF631C14EF400024502B /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Resources/Main_iPad.storyboard; sourceTree = "<group>"; };
+		D4F1BF651C14FAD10024502B /* Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@3x.png"; sourceTree = "<group>"; };
+		D4F1BF671C14FB290024502B /* Icon-Small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@3x.png"; sourceTree = "<group>"; };
+		D4F1BF691C14FB970024502B /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -536,15 +542,18 @@
 		D405E76C1BD483110000A5E5 /* Icon Files */ = {
 			isa = PBXGroup;
 			children = (
+				D4F1BF691C14FB970024502B /* Icon-40.png */,
 				D405E76D1BD483110000A5E5 /* Icon-76.png */,
 				D405E76E1BD483110000A5E5 /* Icon-76@2x.png */,
 				D405E76F1BD483110000A5E5 /* Icon-Small-50.png */,
 				D405E7701BD483110000A5E5 /* Icon-Small.png */,
 				D405E7711BD483110000A5E5 /* Icon-Small@2x.png */,
+				D4F1BF671C14FB290024502B /* Icon-Small@3x.png */,
 				D405E7721BD483110000A5E5 /* Icon-Spotlight.png */,
 				D405E7731BD483110000A5E5 /* Icon-Spotlight@2x.png */,
 				D405E7741BD483110000A5E5 /* Icon.png */,
 				D405E7751BD483110000A5E5 /* Icon@2x.png */,
+				D4F1BF651C14FAD10024502B /* Icon@3x.png */,
 				D405E7761BD483110000A5E5 /* iTunesArtwork-1024.png */,
 				D405E7771BD483110000A5E5 /* iTunesArtwork.png */,
 			);
@@ -907,6 +916,7 @@
 				D405E7E91BD483110000A5E5 /* Default-Landscape.png in Resources */,
 				D48259501BD3610000EF9DF5 /* LaunchScreen.storyboard in Resources */,
 				D405E7E51BD483110000A5E5 /* box-selected.png in Resources */,
+				D4F1BF661C14FAD10024502B /* Icon@3x.png in Resources */,
 				D405E8121BD483110000A5E5 /* info.png in Resources */,
 				D413849A1C0650EA00D46C87 /* box-good-large.png in Resources */,
 				D482594D1BD3610000EF9DF5 /* Assets.xcassets in Resources */,
@@ -915,6 +925,7 @@
 				D405E8021BD483110000A5E5 /* icon-logo.png in Resources */,
 				D405E81A1BD483110000A5E5 /* quotes.txt in Resources */,
 				D405E7EB1BD483110000A5E5 /* Default-Portrait.png in Resources */,
+				D4F1BF681C14FB290024502B /* Icon-Small@3x.png in Resources */,
 				D405E7F21BD483110000A5E5 /* grid-shadow.png in Resources */,
 				D41384A21C0650EA00D46C87 /* round-play-large.png in Resources */,
 				D405E8201BD483110000A5E5 /* cancel-pressed@2x.png in Resources */,
@@ -985,6 +996,7 @@
 				D405E7E01BD483110000A5E5 /* box-blank@2x.png in Resources */,
 				D405E80C1BD483110000A5E5 /* level-logo.png in Resources */,
 				D41384931C0650EA00D46C87 /* bombs3-large@2x.png in Resources */,
+				D4F1BF6A1C14FB970024502B /* Icon-40.png in Resources */,
 				D405E8151BD483110000A5E5 /* logo-refined@2x.png in Resources */,
 				D405E8491BD483110000A5E5 /* walls@2x.png in Resources */,
 				D405E7FE1BD483110000A5E5 /* iTunesArtwork-1024.png in Resources */,
@@ -1235,6 +1247,7 @@
 		D482596B1BD3610100EF9DF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Exponential Invasion/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1247,6 +1260,7 @@
 		D482596C1BD3610100EF9DF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Exponential Invasion/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
