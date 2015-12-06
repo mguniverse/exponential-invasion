@@ -6,7 +6,7 @@
 //  Copyright 2011 include7 AG. All rights reserved.
 //
 
-
+#import <UIKit/UIKit.h>
 
 @interface UIView (I7ShakeAnimation)
 

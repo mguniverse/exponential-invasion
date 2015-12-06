@@ -12,17 +12,17 @@
 @implementation About
 
 -(void)snapSound {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"finger_snap" ofType:@"wav"];  
-    AVAudioPlayer* theAudio1=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];  
-    //theAudio1.delegate = self; 
-    [theAudio1 play];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"finger_snap" ofType:@"wav"];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(void)explodeSound {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"explosion" ofType:@"wav"];  
-    AVAudioPlayer* theAudio2=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];  
-    //theAudio2.delegate = self; 
-    [theAudio2 play];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"explosion" ofType:@"wav"];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(IBAction)mainMenu {

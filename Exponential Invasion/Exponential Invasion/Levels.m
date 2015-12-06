@@ -7,7 +7,6 @@
 //
 
 #import "Levels.h"
-#import "proAlertView.h"
 #import "UIView+I7ShakeAnimation.h"
 
 @implementation Levels
@@ -144,10 +143,8 @@
 -(void)menuInterface {
     leftButton.hidden = false;
     rightButton.hidden = false;
-    
-    restartButton.hidden = true;
-    cancelButton.hidden = true;
-    levelSelectButton.hidden = true;
+
+    endView.hidden = true;
     
     buttonLabel1.text = [NSString stringWithFormat:@"Previous level"];
     buttonLabel2.text = [NSString stringWithFormat:@"Next level"];
@@ -1828,17 +1825,17 @@
 }
 
 -(void)snapSound {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"finger_snap" ofType:@"wav"];  
-    AVAudioPlayer* theAudio1=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];  
-    //theAudio1.delegate = self; 
-    [theAudio1 play];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"finger_snap" ofType:@"wav"];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(void)explodeSound {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"explosion" ofType:@"wav"];  
-    AVAudioPlayer* theAudio2=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];  
-    //theAudio2.delegate = self; 
-    [theAudio2 play];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"explosion" ofType:@"wav"];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(void)loadTotalBombs {
@@ -1847,12 +1844,17 @@
 }
 
 -(void)loadProgress {
+    //temporary solution, if game has no progress yet make sure level 1 never gets locked
+    if (progress == 0) {
+        progress = 1;
+    }
+    
     [self resetProgress];
     levelLock.hidden = false;
     if (progress >= currentLevel) {
         levelLock.hidden = true;
     }
-    //NSLog(@"Progress loaded, progress is %i and currentLevel is %i", progress, currentLevel);
+    NSLog(@"Progress loaded, progress is %i and currentLevel is %i", progress, currentLevel);
 }
 
 -(void)loadLevel {
@@ -7310,62 +7312,6 @@
     [self menuInterface];
 }
 
-- (void)dealloc {
-    [a1i release];
-    [a2i release];
-    [a3i release];
-    [a4i release];
-    [a5i release];
-    [b1i release];
-    [b2i release];
-    [b3i release];
-    [b4i release];
-    [b5i release];
-    [c1i release];
-    [c2i release];
-    [c3i release];
-    [c4i release];
-    [c5i release];
-    [d1i release];
-    [d2i release];
-    [d3i release];
-    [d4i release];
-    [d5i release];
-    [e1i release];
-    [e2i release];
-    [e3i release];
-    [e4i release];
-    [e5i release];  
-    
-    [a1l release];
-    [a2l release];
-    [a3l release];
-    [a4l release];
-    [a5l release];
-    [b1l release];
-    [b2l release];
-    [b3l release];
-    [b4l release];
-    [b5l release];
-    [c1l release];
-    [c2l release];
-    [c3l release];
-    [c4l release];
-    [c5l release];
-    [d1l release];
-    [d2l release];
-    [d3l release];
-    [d4l release];
-    [d5l release];
-    [e1l release];
-    [e2l release];
-    [e3l release];
-    [e4l release];
-    [e5l release];
-    
-    [super dealloc];
-}
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -7481,32 +7427,6 @@
     e3if = false;
     e4if = false;
     e5if = false;
-    
-    a1j = [[jsJiggle alloc]initWithObject:a1l];
-    a2j = [[jsJiggle alloc]initWithObject:a2l];
-    a3j = [[jsJiggle alloc]initWithObject:a3l];
-    a4j = [[jsJiggle alloc]initWithObject:a4l];
-    a5j = [[jsJiggle alloc]initWithObject:a5l];
-    b1j = [[jsJiggle alloc]initWithObject:b1l];
-    b2j = [[jsJiggle alloc]initWithObject:b2l];
-    b3j = [[jsJiggle alloc]initWithObject:b3l];
-    b4j = [[jsJiggle alloc]initWithObject:b4l];
-    b5j = [[jsJiggle alloc]initWithObject:b5l];
-    c1j = [[jsJiggle alloc]initWithObject:c1l];
-    c2j = [[jsJiggle alloc]initWithObject:c2l];
-    c3j = [[jsJiggle alloc]initWithObject:c3l];
-    c4j = [[jsJiggle alloc]initWithObject:c4l];
-    c5j = [[jsJiggle alloc]initWithObject:c5l];
-    d1j = [[jsJiggle alloc]initWithObject:d1l];
-    d2j = [[jsJiggle alloc]initWithObject:d2l];
-    d3j = [[jsJiggle alloc]initWithObject:d3l];
-    d4j = [[jsJiggle alloc]initWithObject:d4l];
-    d5j = [[jsJiggle alloc]initWithObject:d5l];
-    e1j = [[jsJiggle alloc]initWithObject:e1l];
-    e2j = [[jsJiggle alloc]initWithObject:e2l];
-    e3j = [[jsJiggle alloc]initWithObject:e3l];
-    e4j = [[jsJiggle alloc]initWithObject:e4l];
-    e5j = [[jsJiggle alloc]initWithObject:e5l];
     
     currentLevel = 1;
     [self level:currentLevel];

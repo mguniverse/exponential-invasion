@@ -144,9 +144,7 @@
     leftButton.hidden = false;
     rightButton.hidden = false;
     
-    restartButton.hidden = true;
-    cancelButton.hidden = true;
-    levelSelectButton.hidden = true;
+    endView.hidden = true;
     
     buttonLabel1.text = [NSString stringWithFormat:@"Previous level"];
     buttonLabel2.text = [NSString stringWithFormat:@"Next level"];
@@ -351,7 +349,7 @@
     [self clearLevel];
     if (currentLevel == 1) {
         currentLevel = 1;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level1bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level1bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You can tap on white numbers to move them around the grid."];
         c2n = 2;
         c4n = 1;
@@ -361,7 +359,7 @@
     }
     if (currentLevel == 2) {
         currentLevel = 2;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level2bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level2bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Combine two numbers to make greater numbers."];
         b2n = 2;
         d2n = 3;
@@ -372,7 +370,7 @@
     }
     if (currentLevel == 3) {
         currentLevel = 3;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level3bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level3bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You can only combine a greater number to a lesser number."];
         a2n = 4;
         a4n = 2;
@@ -384,7 +382,7 @@
     }
     if (currentLevel == 4) {
         currentLevel = 4;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level4bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level4bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You cannot move onto gaps, go around them."];
         b3wall = true;
         c3wall = true;
@@ -398,7 +396,7 @@
     }
     if (currentLevel == 5) {
         currentLevel = 5;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level5bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level5bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You now have two towers (blue numbers) to conquer."];
         a2wall = true;
         a3wall = true;
@@ -422,7 +420,7 @@
     }
     if (currentLevel == 6) {
         currentLevel = 6;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level6bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level6bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Start with five, and use only one for each tower."];
         b2wall = true;
         b4wall = true;
@@ -445,7 +443,7 @@
     }
     if (currentLevel == 7) {
         currentLevel = 7;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level7bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level7bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You can move numbers diagonally, use this to your advantage."];
         a1wall = true;
         a2wall = true;
@@ -480,7 +478,7 @@
     }
     if (currentLevel == 8) {
         currentLevel = 8;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level8bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level8bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Take note of your available numbers before you add them together."];
         a2wall = true;
         a3wall = true;
@@ -516,7 +514,7 @@
     }
     if (currentLevel == 9) {
         currentLevel = 9;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level9bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level9bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Equal numbers cannot add together, one must be greater than the other."];
         a1wall = true;
         a2wall = true;
@@ -551,7 +549,7 @@
     }
     if (currentLevel == 10) {
         currentLevel = 10;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level10bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level10bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Think ahead, you do not want to waste crucial numbers."];
         a1wall = true;
         a2wall = true;
@@ -587,7 +585,7 @@
     }
     if (currentLevel == 11) {
         currentLevel = 11;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level11bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level11bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Again, try to be resourceful with your available numbers."];
         a1wall = true;
         a3wall = true;
@@ -623,7 +621,7 @@
     }
     if (currentLevel == 12) {
         currentLevel = 12;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level12bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level12bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"The first move is the most tricky one, but it will open up the grid."];
         a1wall = true;
         a2wall = true;
@@ -660,7 +658,7 @@
     }
     if (currentLevel == 13) {
         currentLevel = 13;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level13bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level13bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"A twelve defends an eight, save some forces to defeat the eight."];
         a1wall = true;
         a2wall = true;
@@ -697,7 +695,7 @@
     }
     if (currentLevel == 14) {
         currentLevel = 14;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level14bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level14bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You may need to add numbers together to make space."];
         a3wall = true;
         b3wall = true;
@@ -735,7 +733,7 @@
     }
     if (currentLevel == 15) {
         currentLevel = 15;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level15bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level15bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Your fleet is divided, use only what is needed to defeat the blue numbers."];
         a5wall = true;
         b2wall = true;
@@ -772,7 +770,7 @@
     }
     if (currentLevel == 16) {
         currentLevel = 16;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level16bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level16bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You have everything needed to complete the level at your disposal."];
         a1wall = true;
         a2wall = true;
@@ -809,7 +807,7 @@
     }
     if (currentLevel == 17) {
         currentLevel = 17;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level17bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level17bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Be efficient, you only need an integer that is greater by one."];
         a1wall = true;
         a3wall = true;
@@ -846,7 +844,7 @@
     }
     if (currentLevel == 18) {
         currentLevel = 18;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level18bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level18bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"While intimidating, this puzzle has many solutions. Have fun."];
         b3wall = true;
         d3wall = true;
@@ -886,7 +884,7 @@
     }
     if (currentLevel == 19) {
         currentLevel = 19;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level19bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level19bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"This is the part where the levels start to get a bit more difficult."];
         a3wall = true;
         b2wall = true;
@@ -923,7 +921,7 @@
     }
     if (currentLevel == 20) {
         currentLevel = 20;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level20bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level20bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"In these more difficult levels, you will have more and greater towers."];
         a1wall = true;
         a5wall = true;
@@ -962,7 +960,7 @@
     }
     if (currentLevel == 21) {
         currentLevel = 21;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level21bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level21bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Often you will need decide carefully which tower to invade first."];
         a2wall = true;
         a4wall = true;
@@ -1000,7 +998,7 @@
     }
     if (currentLevel == 22) {
         currentLevel = 22;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level22bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level22bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"A lot of these tougher levels are based off of earlier designs."];
         a3wall = true;
         a4wall = true;
@@ -1039,7 +1037,7 @@
     }
     if (currentLevel == 23) {
         currentLevel = 23;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level23bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level23bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Every level has a solution, yet your approach to the situation can vary."];
         a3wall = true;
         b2wall = true;
@@ -1079,7 +1077,7 @@
     }
     if (currentLevel == 24) {
         currentLevel = 24;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level24bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level24bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"As one invasion comes to an end, a new one prepares for initiation."];
         a1wall = true;
         a5wall = true;
@@ -1118,7 +1116,7 @@
     }
     if (currentLevel == 25) {
         currentLevel = 25;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level25bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level25bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"The most difficult part is figuring out where to start."];
         a2wall = true;
         b2wall = true;
@@ -1159,7 +1157,7 @@
     }
     if (currentLevel == 26) {
         currentLevel = 26;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level26bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level26bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"The solution is not always as it seems, think outside the box."];
         a1wall = true;
         b2wall = true;
@@ -1200,7 +1198,7 @@
     }
     if (currentLevel == 27) {
         currentLevel = 27;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level27bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level27bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"The puzzles are not always solved from left to right."];
         a2wall = true;
         a3wall = true;
@@ -1240,7 +1238,7 @@
     }
     if (currentLevel == 28) {
         currentLevel = 28;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level28bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level28bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Trial and error are your two best friends in this level."];
         a3wall = true;
         b2wall = true;
@@ -1279,7 +1277,7 @@
     }
     if (currentLevel == 29) {
         currentLevel = 29;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level29bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level29bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"One does not simply solve these difficult puzzles."];
         b1wall = true;
         b2wall = true;
@@ -1318,7 +1316,7 @@
     }
     if (currentLevel == 30) {
         currentLevel = 30;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level30bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level30bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"The fact that these levels look like snowflakes is purely accidental."];
         a2wall = true;
         a4wall = true;
@@ -1357,7 +1355,7 @@
     }
     if (currentLevel == 31) {
         currentLevel = 31;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level31bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level31bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Time is of no concern, you are ranked by the strategies you use."];
         b1wall = true;
         b5wall = true;
@@ -1396,7 +1394,7 @@
     }
     if (currentLevel == 32) {
         currentLevel = 32;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level32bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level32bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Sometimes the simpler puzzles are the most fun to solve."];
         a2wall = true;
         a3wall = true;
@@ -1434,7 +1432,7 @@
     }
     if (currentLevel == 33) {
         currentLevel = 33;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level33bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level33bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"Just kidding, here's a real puzzle. Good luck."];
         a3wall = true;
         a4wall = true;
@@ -1473,7 +1471,7 @@
     }
     if (currentLevel == 34) {
         currentLevel = 34;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level34bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level34bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"This level looks intimidating, but you already know the solution."];
         a2wall = true;
         a3wall = true;
@@ -1513,7 +1511,7 @@
     }
     if (currentLevel == 35) {
         currentLevel = 35;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level35bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level35bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"You know how to solve every puzzle, hurdle every obstacle."];
         b2wall = true;
         b4wall = true;
@@ -1552,7 +1550,7 @@
     }
     if (currentLevel == 36) {
         currentLevel = 36;
-        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i.png", level36bombs]]];
+        [bombIndicator setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bomb-indicator%i-large.png", level36bombs]]];
         descriptionLabel.text = [NSString stringWithFormat:@"This is the final level of Exponential Invasion. Thanks for playing."];
         b3wall = true;
         d3wall = true;
@@ -1828,16 +1826,16 @@
 
 -(void)snapSound {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"finger_snap" ofType:@"wav"];
-    AVAudioPlayer* theAudio1=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
-    //theAudio1.delegate = self;
-    [theAudio1 play];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(void)explodeSound {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"explosion" ofType:@"wav"];
-    AVAudioPlayer* theAudio2=[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
-    //theAudio2.delegate = self;
-    [theAudio2 play];
+    theAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    theAudio.volume = 0.5;
+    [theAudio play];
 }
 
 -(void)loadTotalBombs {
@@ -1846,6 +1844,11 @@
 }
 
 -(void)loadProgress {
+    //temporary solution, if game has no progress yet make sure level 1 never gets locked
+    if (progress == 0) {
+        progress = 1;
+    }
+    
     [self resetProgress];
     levelLock.hidden = false;
     if (progress >= currentLevel) {
@@ -7309,62 +7312,6 @@
     [self menuInterface];
 }
 
-- (void)dealloc {
-    [a1i release];
-    [a2i release];
-    [a3i release];
-    [a4i release];
-    [a5i release];
-    [b1i release];
-    [b2i release];
-    [b3i release];
-    [b4i release];
-    [b5i release];
-    [c1i release];
-    [c2i release];
-    [c3i release];
-    [c4i release];
-    [c5i release];
-    [d1i release];
-    [d2i release];
-    [d3i release];
-    [d4i release];
-    [d5i release];
-    [e1i release];
-    [e2i release];
-    [e3i release];
-    [e4i release];
-    [e5i release];
-    
-    [a1l release];
-    [a2l release];
-    [a3l release];
-    [a4l release];
-    [a5l release];
-    [b1l release];
-    [b2l release];
-    [b3l release];
-    [b4l release];
-    [b5l release];
-    [c1l release];
-    [c2l release];
-    [c3l release];
-    [c4l release];
-    [c5l release];
-    [d1l release];
-    [d2l release];
-    [d3l release];
-    [d4l release];
-    [d5l release];
-    [e1l release];
-    [e2l release];
-    [e3l release];
-    [e4l release];
-    [e5l release];
-    
-    [super dealloc];
-}
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -7480,32 +7427,6 @@
     e3if = false;
     e4if = false;
     e5if = false;
-    
-    a1j = [[jsJiggle alloc]initWithObject:a1l];
-    a2j = [[jsJiggle alloc]initWithObject:a2l];
-    a3j = [[jsJiggle alloc]initWithObject:a3l];
-    a4j = [[jsJiggle alloc]initWithObject:a4l];
-    a5j = [[jsJiggle alloc]initWithObject:a5l];
-    b1j = [[jsJiggle alloc]initWithObject:b1l];
-    b2j = [[jsJiggle alloc]initWithObject:b2l];
-    b3j = [[jsJiggle alloc]initWithObject:b3l];
-    b4j = [[jsJiggle alloc]initWithObject:b4l];
-    b5j = [[jsJiggle alloc]initWithObject:b5l];
-    c1j = [[jsJiggle alloc]initWithObject:c1l];
-    c2j = [[jsJiggle alloc]initWithObject:c2l];
-    c3j = [[jsJiggle alloc]initWithObject:c3l];
-    c4j = [[jsJiggle alloc]initWithObject:c4l];
-    c5j = [[jsJiggle alloc]initWithObject:c5l];
-    d1j = [[jsJiggle alloc]initWithObject:d1l];
-    d2j = [[jsJiggle alloc]initWithObject:d2l];
-    d3j = [[jsJiggle alloc]initWithObject:d3l];
-    d4j = [[jsJiggle alloc]initWithObject:d4l];
-    d5j = [[jsJiggle alloc]initWithObject:d5l];
-    e1j = [[jsJiggle alloc]initWithObject:e1l];
-    e2j = [[jsJiggle alloc]initWithObject:e2l];
-    e3j = [[jsJiggle alloc]initWithObject:e3l];
-    e4j = [[jsJiggle alloc]initWithObject:e4l];
-    e5j = [[jsJiggle alloc]initWithObject:e5l];
     
     currentLevel = 1;
     [self level:currentLevel];

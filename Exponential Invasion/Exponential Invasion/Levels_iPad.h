@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iPadView.h"
-#import "jsJiggle.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Twitter/Twitter.h>
 
@@ -181,32 +179,6 @@
     IBOutlet UIView *gridView;
     
     IBOutlet UISwipeGestureRecognizer *swipeUp;
-    
-    jsJiggle *a1j;
-    jsJiggle *a2j;
-    jsJiggle *a3j;
-    jsJiggle *a4j;
-    jsJiggle *a5j;
-    jsJiggle *b1j;
-    jsJiggle *b2j;
-    jsJiggle *b3j;
-    jsJiggle *b4j;
-    jsJiggle *b5j;
-    jsJiggle *c1j;
-    jsJiggle *c2j;
-    jsJiggle *c3j;
-    jsJiggle *c4j;
-    jsJiggle *c5j;
-    jsJiggle *d1j;
-    jsJiggle *d2j;
-    jsJiggle *d3j;
-    jsJiggle *d4j;
-    jsJiggle *d5j;
-    jsJiggle *e1j;
-    jsJiggle *e2j;
-    jsJiggle *e3j;
-    jsJiggle *e4j;
-    jsJiggle *e5j;
     
     IBOutlet UIButton *a1b;
     IBOutlet UIButton *a2b;

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iPhoneView.h"
+#import "ViewController.h"
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 

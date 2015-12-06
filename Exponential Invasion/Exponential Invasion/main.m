@@ -2,16 +2,15 @@
 //  main.m
 //  Exponential Invasion
 //
-//  Created by Danny Perski on 8/22/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Danny Perski on 10/17/15.
+//  Copyright © 2015 Danny Perski. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
-int main(int argc, char *argv[])
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"Exponential_InvasionAppDelegate");
-    [pool release];
-    return retVal;
+int main(int argc, char * argv[]) {
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    }
 }

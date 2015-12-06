@@ -7,7 +7,7 @@
 //
 
 #import "About_iPad.h"
-#import "UIView+I7ShakeAnimation.h"
+//#import "UIView+I7ShakeAnimation.h"
 
 @implementation About_iPad
 
@@ -33,7 +33,7 @@
 -(IBAction)shakeAnimation {
     explosionButton.enabled = false;
     [self explodeSound];
-    [self.view shakeX];
+    //[self.view shakeX];
     [self performSelector:@selector(enableExplosion) withObject:nil afterDelay:1.0];
 }
 
