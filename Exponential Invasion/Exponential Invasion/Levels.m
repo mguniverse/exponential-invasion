@@ -1854,7 +1854,7 @@
     if (progress >= currentLevel) {
         levelLock.hidden = true;
     }
-    NSLog(@"Progress loaded, progress is %i and currentLevel is %i", progress, currentLevel);
+    //NSLog(@"Progress loaded, progress is %i and currentLevel is %i", progress, currentLevel);
 }
 
 -(void)loadLevel {
